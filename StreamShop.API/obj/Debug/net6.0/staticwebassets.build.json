@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1DjymKqHnO1hpWH5CC4RSYMrOzdT+jPyw9WT8HZcsdY=",
+  "Source": "StreamShop.API",
+  "BasePath": "_content/StreamShop.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

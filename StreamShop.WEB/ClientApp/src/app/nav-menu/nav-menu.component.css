@@ -1,0 +1,37 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.navbar .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.span-brand span {
+  color: #fff;
+  font-size: 60px;
+}
+.container a {
+  font-size: 24px;
+  padding-top: 20px;
+}
+.container a .span-brand-name {
+  line-height: 10px;
+  display: block;
+}
