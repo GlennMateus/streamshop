@@ -14,16 +14,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped(typeof(IProductImagesServices), typeof(ProductImagesService));
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IProductRepository<>), typeof(Repository<>));
+builder.Services.AddDbContext<SQLiteDbContext>();
 builder.Services.AddCors(
     options => options.AddPolicy(
         "CorsPolicy",
         builder => builder
             .WithOrigins("*")
             .AllowAnyMethod()
-            
             .AllowAnyHeader()
+            .AllowAnyOrigin()
     ));
-builder.Services.AddDbContext<SQLiteDbContext>();
 
 var app = builder.Build();
 

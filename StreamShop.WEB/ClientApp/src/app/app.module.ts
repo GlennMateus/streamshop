@@ -23,7 +23,7 @@ import {ProductComponent} from "./products/edit/product.component";
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: ProductsListComponent, pathMatch: 'full' },
-      { path: 'product', component: ProductComponent, pathMatch: 'full' }
+      { path: 'product/:id', component: ProductComponent, pathMatch: 'full' }
 
     ])
   ],

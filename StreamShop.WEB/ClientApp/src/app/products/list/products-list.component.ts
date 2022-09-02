@@ -9,7 +9,7 @@ export class ProductsListComponent {
   public list: Product[] = [];
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Product[]>(baseUrl + 'api/products').subscribe(result => {
+    http.get<Product[]>(baseUrl + 'api/product').subscribe(result => {
       console.log(result);
     }, error => console.error(error));
   }
