@@ -1,5 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import {ProductImage} from "../product-images/ProductImage";
+import Category from "../../categories/category";
 
 @Component({
   selector: 'app-products-list',
@@ -10,14 +12,19 @@ export class ProductsListComponent {
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Product[]>(baseUrl + 'api/product').subscribe(result => {
-      console.log(result);
+      this.list = result;
+      console.log(this.list)
     }, error => console.error(error));
   }
 }
 
 interface Product {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
+  id: number;
+  name: string;
+  description: string;
+  originalPrice: number;
+  promotionPrice: number;
+  category: Category;
+  images: ProductImage[];
 }
+

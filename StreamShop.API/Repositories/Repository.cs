@@ -27,22 +27,38 @@ public class Repository<T> : IDisposable, IRepository<T>, IProductRepository<T> 
     public List<Product> GetAllProducts()
     {
         var products = _context.ProductImages
-            .Where(pi=>pi.IsHighlighted)
             .GroupJoin(_context.Product,
                 productImage => productImage.ProductId,
                 product => product.Id,
                 (productImage, product) => new { productImage, product })
             .SelectMany(
-                x => x.product.DefaultIfEmpty(),
-                (x, product) => new Product
+                collection => collection.product,
+                (pi, p) => new
                 {
-                    Id = x.productImage.ProductId,
-                    Name = product.Name,
-                    Description = product.Description,
-                    OriginalPrice = product.OriginalPrice,
-                    PromotionPrice = product.PromotionPrice,
-                    Images = (product.Images ?? new List<ProductImages> { x.productImage })
+                    pi,
+                    p
                 })
+            .Where(whr => whr.pi.productImage.IsHighlighted)
+            .Select(selector => new Product
+            {
+                Id = selector.p.Id,
+                Name = selector.p.Name,
+                Description = selector.p.Description,
+                OriginalPrice = selector.p.OriginalPrice,
+                PromotionPrice = selector.p.PromotionPrice,
+                CategoryId = selector.p.CategoryId,
+                Category = selector.p.Category,
+                Images = new List<ProductImages>
+                {
+                    new ProductImages
+                    {
+                        Id = selector.pi.productImage.Id,
+                        ProductId = selector.pi.productImage.ProductId,
+                        Name = selector.pi.productImage.Name,
+                        IsHighlighted = selector.pi.productImage.IsHighlighted
+                    }
+                }
+            })
             .ToList();
 
         return products;
