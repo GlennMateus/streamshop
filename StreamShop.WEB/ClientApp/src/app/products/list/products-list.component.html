@@ -1,6 +1,14 @@
 <h1>Product list</h1>
 
+<div class="product-list" *ngFor="let item of list; index as i;">
+  <div>
+    <img src="{{serverUrl}}{{item.images[0].name}}" alt="product image">
+  </div>
+</div>
+
+
 <!--
+
 <table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
   <thead>
   <tr>

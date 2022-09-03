@@ -1,3 +1,4 @@
+using Microsoft.Extensions.FileProviders;
 using StreamShop.API;
 using StreamShop.API.Context;
 using StreamShop.API.Interfaces;
@@ -35,9 +36,17 @@ if (app.Environment.IsDevelopment())
 }
 app.UseCors("CorsPolicy");
 app.UseHttpsRedirection();
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Environment.CurrentDirectory, "images")
+    ),
+    RequestPath = "/images"
+});
+
+
 
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

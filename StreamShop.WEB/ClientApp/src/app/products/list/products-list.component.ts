@@ -9,6 +9,7 @@ import Category from "../../categories/category";
 })
 export class ProductsListComponent {
   public list: Product[] = [];
+  public serverUrl = "https://localhost:7151/images/products/";
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     http.get<Product[]>(baseUrl + 'api/product').subscribe(result => {
