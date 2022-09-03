@@ -32,17 +32,7 @@ public class ProductImagesController : ControllerBase
     public async Task<ActionResult<ProductImages>> CreateImage(int productId, 
         [FromForm] List<IFormFile> productImages)
     {
-        await _productImagesServices.UploadImages(productImages);
-        foreach (var file in productImages)
-        {
-            var productImage = new ProductImages
-            {
-                Name = file.FileName,
-                ProductId = productId,
-                IsHighlighted = (productImages.IndexOf(file) == 0)
-            };
-            _productImagesRepository.Add(productImage);
-        }
+        await _productImagesServices.UploadImages(productId, productImages);
         return Ok();
     }
 

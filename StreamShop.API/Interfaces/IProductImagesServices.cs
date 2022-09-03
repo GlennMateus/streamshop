@@ -2,5 +2,5 @@
 
 public interface IProductImagesServices
 {
-    Task UploadImages(List<IFormFile> files);
+    Task UploadImages(int productId, List<IFormFile> files);
 }
