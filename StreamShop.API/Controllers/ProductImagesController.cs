@@ -12,29 +12,40 @@ public class ProductImagesController : ControllerBase
 {
     private readonly IRepository<ProductImages> _productImagesRepository;
     private readonly IProductImagesServices _productImagesServices;
-    
-    public ProductImagesController(IRepository<ProductImages> productImagesRepository, IProductImagesServices productImagesServices)
+
+    public ProductImagesController(IRepository<ProductImages> productImagesRepository,
+        IProductImagesServices productImagesServices)
     {
         _productImagesRepository = productImagesRepository;
         _productImagesServices = productImagesServices;
     }
-    
-    
+
 
     [HttpGet("{productId}", Name = "GetProductImages")]
     public async Task<ActionResult<IEnumerable<Product>>> GetProductImages(int productId)
     {
-        var productImages = _productImagesRepository.GetAll().Where(pi =>pi.ProductId == productId);
+        var productImages = _productImagesRepository.GetAll().Where(pi => pi.ProductId == productId);
         return Ok(productImages);
     }
-    
+
     [HttpPost("{productId}", Name = "CreateImage")]
-    public async Task<ActionResult<ProductImages>> CreateImage(int productId, [FromForm] List<IFormFile> productImages)
+    public async Task<ActionResult<ProductImages>> CreateImage(int productId, 
+        [FromForm] List<IFormFile> productImages)
     {
         await _productImagesServices.UploadImages(productImages);
+        foreach (var file in productImages)
+        {
+            var productImage = new ProductImages
+            {
+                Name = file.FileName,
+                ProductId = productId,
+                IsHighlighted = (productImages.IndexOf(file) == 0)
+            };
+            _productImagesRepository.Add(productImage);
+        }
         return Ok();
     }
-    
+
     [HttpDelete("{id}", Name = "DeleteImage")]
     public async Task<ActionResult<ProductImages>> DeleteImage(int id)
     {
@@ -43,6 +54,7 @@ public class ProductImagesController : ControllerBase
         {
             return NotFound();
         }
+
         _productImagesRepository.Delete(product);
         return NoContent();
     }

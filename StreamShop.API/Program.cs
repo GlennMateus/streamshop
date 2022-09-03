@@ -2,7 +2,7 @@ using StreamShop.API;
 using StreamShop.API.Context;
 using StreamShop.API.Interfaces;
 using StreamShop.API.Repositories;
-using StreamShop.API.Services.ProductImages;
+using StreamShop.API.Services.ProductImagesServices;
 
 var builder = WebApplication.CreateBuilder(args);
 

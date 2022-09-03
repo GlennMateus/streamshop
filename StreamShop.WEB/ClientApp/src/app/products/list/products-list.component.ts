@@ -24,6 +24,7 @@ interface Product {
   description: string;
   originalPrice: number;
   promotionPrice: number;
+  categoryId: number;
   category: Category;
   images: ProductImage[];
 }
