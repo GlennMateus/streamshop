@@ -63,6 +63,7 @@ public class ProductController : ControllerBase
     [HttpDelete("{id}", Name = "DeleteProduct")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
+        //gitignore test
         var product = _productRepository.GetProductById(id);
         if (product == null)
         {
