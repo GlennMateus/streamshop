@@ -16,6 +16,7 @@ public class Repository<T> : IDisposable, IRepository<T>, IProductRepository<T> 
 
     public void Dispose()
     {
+        _context.SaveChanges();
         _context.Dispose();
     }
 
@@ -95,7 +96,6 @@ public class Repository<T> : IDisposable, IRepository<T>, IProductRepository<T> 
     public void Add(T entity)
     {
         _context.Set<T>().Add(entity);
-        _context.SaveChanges();
     }
 
     public void Delete(T entityToDelete)

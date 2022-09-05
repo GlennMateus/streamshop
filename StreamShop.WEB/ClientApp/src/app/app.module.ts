@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
@@ -21,6 +22,7 @@ import {ProductComponent} from "./products/edit/product.component";
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     FormsModule,
+    SweetAlert2Module.forRoot(),
     RouterModule.forRoot([
       { path: '', component: ProductsListComponent, pathMatch: 'full' },
       { path: 'product/:id', component: ProductComponent, pathMatch: 'full' }

@@ -11,25 +11,29 @@ namespace StreamShop.API.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IProductRepository<Product> _productRepository;
-    public ProductController(IProductRepository<Product> productRepository)
+    private readonly IProductImagesServices _productImagesServices;
+
+    public ProductController(IProductRepository<Product> productRepository,
+        IProductImagesServices productImagesServices)
     {
         _productRepository = productRepository;
+        _productImagesServices = productImagesServices;
     }
-    
+
     [HttpGet(Name = "GetAllProducts")]
     public async Task<ActionResult<IEnumerable<Product>>> GetAllProducts()
     {
         var products = _productRepository.GetAllProducts();
         return Ok(products);
     }
-    
+
     [HttpGet("{id}", Name = "GetProductById")]
     public async Task<ActionResult<Product>> GetProductById(int id)
     {
         var product = _productRepository.GetProductById(id);
         return Ok(product);
     }
-    
+
     [HttpPost(Name = "CreateProduct")]
     public async Task<ActionResult<Product>> CreateProduct(Product product)
     {
@@ -44,18 +48,18 @@ public class ProductController : ControllerBase
         {
             return BadRequest("Product is null.");
         }
-        
+
         var productToUpdate = _productRepository.GetProductById(id);
         if (productToUpdate == null)
         {
             return NotFound("The Product record couldn't be found.");
         }
-        
+
         _productRepository.Update(productToUpdate, product);
-        
+
         return NoContent();
     }
-    
+
     [HttpDelete("{id}", Name = "DeleteProduct")]
     public async Task<IActionResult> DeleteProduct(int id)
     {
@@ -64,9 +68,9 @@ public class ProductController : ControllerBase
         {
             return NotFound("The Product record couldn't be found.");
         }
-        
+
         _productRepository.Delete(product);
-        
+        await _productImagesServices.DeleteImages(product.Images);
         return NoContent();
     }
 }

@@ -14,6 +14,14 @@ public class ProductImagesService : IProductImagesServices
         _productImagesRepository = productImagesRepository;
     }
     
+    private void CheckAndDirectory()
+    {
+        if (!Directory.Exists(ImagesPath))
+        {
+            Directory.CreateDirectory(ImagesPath);
+        }
+    }
+    
     public async Task UploadImages(int productId, List<IFormFile> files)
     {
         CheckAndDirectory();
@@ -24,6 +32,15 @@ public class ProductImagesService : IProductImagesServices
             var newFileName = $"{Guid.NewGuid().ToString().Replace("-", "")}_{file.FileName}";
             await AddImageToDirectory(file, newFileName);
             AddImageToDatabase(productId, file, newFileName, fileIsHighlighted);
+        }
+    }
+
+    public async Task DeleteImages(List<ProductImages> files)
+    {
+        foreach (var file in files)
+        {
+            DeleteImageFromDatabase(file);
+            DeleteImageFromDirectory(file.Name);
         }
     }
 
@@ -46,11 +63,13 @@ public class ProductImagesService : IProductImagesServices
         });
     }
     
-    private void CheckAndDirectory()
+    private void DeleteImageFromDirectory(string fileName)
     {
-        if (!Directory.Exists(ImagesPath))
-        {
-            Directory.CreateDirectory(ImagesPath);
-        }
+        File.Delete($"{ImagesPath}/{fileName}");
+    }
+    
+    private void DeleteImageFromDatabase(ProductImages file)
+    {
+        _productImagesRepository.Delete(file);
     }
 }

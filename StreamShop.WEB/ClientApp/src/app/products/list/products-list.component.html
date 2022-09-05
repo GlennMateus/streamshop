@@ -1,30 +1,63 @@
-<h1>Product list</h1>
+<div class="products-container">
+  <div class="component-header row">
+    <div class="col-12">
+      <h2>Produtos</h2>
+    </div>
+    <div class="col-12">
+      <div class="row">
+        <span class="col-10">
+          Edite e adicione produtos
+        </span>
+        <div class="col-2">
+          <a routerLink="/product">
+            <button class="add-product">
+              <span class="material-symbols-outlined">add</span>
+              Adicionar produto
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<div class="product-list" *ngFor="let item of list; index as i;">
-  <div>
-    <img src="{{serverUrl}}{{item.images[0].name}}" alt="product image">
+  <div class="product-list" *ngFor="let item of list; index as i;">
+    <div class="product flex-row {{setItemBgColor(i)}}" id="p_{{i}}">
+      <div class="product-image col-1">
+        <img src="{{serverUrl}}{{item.images[0].name}}" alt="product image">
+      </div>
+      <div class="prod-info col-11 row">
+        <div class="product-name col-12">{{item.name}}</div>
+        <div class="col-3">
+          <p>Código</p>
+          <p>{{item.id}}</p>
+        </div>
+        <div class="col-3">
+          <p>Preço</p>
+          <p>R$ {{item.originalPrice}}.00</p>
+        </div>
+        <div class="col-3">
+          <p>Preço promocional</p>
+          <p>R$ {{item.promotionPrice}}.00</p>
+        </div>
+        <div class="col-3 actions">
+          <a routerLink="/product/{{item.id}}" class="{{setactionBgColor(i)}}">
+            <span class="material-symbols-outlined">edit</span>
+          </a>
+          <button
+            class="product-delete {{setactionBgColor(i)}}"
+            [swal]="{
+              title: 'Deletar produto',
+              text: 'Você tem certeza que deseja deletar este produto?',
+              showCancelButton: true,
+              confirmButtonText: 'Sim',
+              cancelButtonText: 'Não'
+            }"
+            (confirm)="deleteProduct(item.id)"
+          >
+            <span class="material-symbols-outlined">delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-
-<!--
-
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts">
-  <thead>
-  <tr>
-    <th>Date</th>
-    <th>Temp. (C)</th>
-    <th>Temp. (F)</th>
-    <th>Summary</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let forecast of forecasts">
-    <td>{{ forecast.date }}</td>
-    <td>{{ forecast.temperatureC }}</td>
-    <td>{{ forecast.temperatureF }}</td>
-    <td>{{ forecast.summary }}</td>
-  </tr>
-  </tbody>
-</table>
--->

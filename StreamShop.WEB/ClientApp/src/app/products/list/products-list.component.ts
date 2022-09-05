@@ -1,20 +1,39 @@
-import { Component, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component, Inject, Injectable} from '@angular/core';
+import {HttpClient, HttpStatusCode} from '@angular/common/http';
 import {ProductImage} from "../product-images/ProductImage";
 import Category from "../../categories/category";
+import {getBaseUrl} from "../../../main";
 
 @Component({
   selector: 'app-products-list',
-  templateUrl: './products-list.component.html'
+  templateUrl: './products-list.component.html',
+  styleUrls: ['./products-list.component.css']
 })
+@Injectable()
 export class ProductsListComponent {
+  private baseUrl: string = getBaseUrl();
   public list: Product[] = [];
-  public serverUrl = "https://localhost:7151/images/products/";
+  public serverUrl = `${this.baseUrl}images/products/`;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    http.get<Product[]>(baseUrl + 'api/product').subscribe(result => {
+  public setItemBgColor(index: number) : string {
+    return index % 2 == 0 ? "bg-gray" : "bg-white";
+  }
+  public setactionBgColor(index: number) : string {
+    return index % 2 == 0 ? "bg-white" : "bg-gray";
+  }
+
+  public deleteProduct(itemId:number) {
+    this.http.delete(`${this.baseUrl}api/product/${itemId}`).subscribe( async result => {
+      await this.init();
+    }, error => console.error(error));
+  }
+  constructor(private http: HttpClient) {
+    this.init();
+  }
+  init() {
+    this.http.get<Product[]>(this.baseUrl + 'api/product').subscribe(result => {
       this.list = result;
-      console.log(this.list)
+      console.log('estive aqui carai')
     }, error => console.error(error));
   }
 }
