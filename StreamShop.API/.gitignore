@@ -1,6 +1,6 @@
 ﻿.idea
-/bin/
-/obj/
+**/bin/*
+**/obj/*
 
 /images/products/**
 /images/products/!.gitignore
