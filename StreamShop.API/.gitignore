@@ -1,0 +1,6 @@
+﻿/images/products/**
+/images/products/!.gitignore
+
+app.db
+app.db-shm
+app.db-wal

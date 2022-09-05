@@ -17,7 +17,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="images\products" />
       <Folder Include="Migrations" />
     </ItemGroup>
 
