@@ -1,7 +1,6 @@
 ﻿.idea
-bin
-obj
-
+/bin/
+/obj/
 
 /images/products/**
 /images/products/!.gitignore
@@ -9,3 +8,4 @@ obj
 app.db
 app.db-shm
 app.db-wal
+
