@@ -1,4 +1,9 @@
-﻿/images/products/**
+﻿.idea
+bin
+obj
+
+
+/images/products/**
 /images/products/!.gitignore
 
 app.db
