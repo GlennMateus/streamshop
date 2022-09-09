@@ -1,1 +1,30 @@
-<h1>Product</h1>
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <div class="row">
+    <div class="col-12">
+      <div>
+        <strong>Imagens do produto</strong>
+      </div>
+      <div>
+        <strong>Clique e arraste para ordenar as imagens</strong>
+      </div>
+    </div>
+    <div class="images">
+      <div class="img box">
+        <label for="img-file-{{imgCounter}}">
+          <span class="material-symbols-outlined">add</span>
+          <input id="img-file-{{imgCounter}}" type="file" (change)="addImage($event)">
+          <img
+            [src]="sanitizeURL(imgCounter)"
+            alt="your file"
+          >
+        </label>
+        <div class="img-bottom">Imagem principal</div>
+      </div>
+      <div class="img box">
+        <span class="material-symbols-outlined">add</span>
+        <div>Adicionar mais fotos</div>
+      </div>
+    </div>
+  </div>
+</div>
+

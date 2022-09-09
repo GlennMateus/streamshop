@@ -7,8 +7,8 @@ public class Product
     public string Description { get; set; }
     public decimal OriginalPrice { get; set; }
     public decimal PromotionPrice { get; set; }
-    
     public int CategoryId { get; set; }
+    
     public Category? Category { get; set; }  
     public List<ProductImages>? Images { get; set; }
 }
